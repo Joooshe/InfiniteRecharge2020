@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,6 +31,13 @@ import frc.robot.subsystems.ExampleSubsystem;
 public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI m_oi;
+  public static DriveTrain driveTrain;
+
+  //Ultra sonic sensor object and constants
+  public static AnalogInput m_ultrasonic;
+  public static final double kValueToInches = 0.125; //ultra sonic conversion factor
+  public static final double kP = 0.05; //proportional speed constant
+
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -40,6 +49,9 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_oi = new OI();
+    driveTrain = new DriveTrain();
+    m_ultrasonic = new AnalogInput(RobotMap.m_ultrasonic);
+
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
@@ -124,6 +136,14 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    Dashboard();
+  }
+
+  //where we put all our dashboard commands
+  public void Dashboard() {
+    SmartDashboard.putString("Hello", "Test");
+    SmartDashboard.putNumber("Ultra Sonic", m_ultrasonic.getValue() * kValueToInches);
+    //SmartDashboard.putData(value);
   }
 
   /**

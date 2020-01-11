@@ -42,7 +42,7 @@ public class OI {
   public static final int buttonY = 4;
   public static final int buttonLeftBumper = 5;
   public static final int buttonRightBumper = 6;
-  public static final int buttonLeftPaddle = 9;
+  public  final int buttonLeftPaddle = 9;
 
   public OI() {
     controller = new XboxController(0);

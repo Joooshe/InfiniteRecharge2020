@@ -11,6 +11,13 @@ that they can be accessed in the Robot file */
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+//import frc.robot.commands.SolenoidRetract;
+//import frc.robot.commands.SolenoidExtend;
+import frc.robot.commands.*;
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -43,4 +50,39 @@ public class OI {
   // Start the command when the button is released and let it run the command
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
+
+private XboxController controller;
+private Button bA;
+private Button bB;
+private Button bX;
+private Button bY;
+private Button leftPaddle;
+private Button bLeftBumper;
+private Button bRightBumper;
+private Button rightPaddle;
+
+public static final int buttonA = 1;
+public static final int buttonB = 2;
+public static final int buttonX = 3;
+public static final int buttonY = 4;
+public static final int buttonLeftBumper = 5;
+public static final int buttonRightBumper = 6;
+public  final int buttonLeftPaddle = 9;
+
+  public OI() {
+    controller = new XboxController(0);
+    bA = new JoystickButton(controller, buttonA);
+    bB = new JoystickButton(controller, buttonB);
+    bX = new JoystickButton(controller, buttonX);
+    bY = new JoystickButton(controller, buttonY);
+    bLeftBumper = new JoystickButton(controller , buttonLeftBumper);
+    bRightBumper = new JoystickButton(controller , buttonRightBumper);
+    leftPaddle = new JoystickButton(controller, buttonLeftPaddle);
+
+
+  }
+
+  public XboxController getController() {
+    return controller;
+  }
 }
