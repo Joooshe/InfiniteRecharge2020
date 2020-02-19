@@ -10,6 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
+import frc.robot.commands.*;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -42,15 +44,15 @@ public class OI {
   // Start the command when the button is released and let it run the command
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
-  private XboxController controller;
-  private Button bA;
-  private Button bB;
-  private Button bX;
-  private Button bY;
-  private Button leftPaddle;
-  private Button bLeftBumper;
-  private Button bRightBumper;
-  private Button rightPaddle;
+  public static XboxController controller;
+  private static Button bA;
+  private static Button bB;
+  private static Button bX;
+  private static Button bY;
+  private static Button leftPaddle;
+  private static Button bLeftBumper;
+  private static Button bRightBumper;
+  private static Button rightPaddle;
 
   public static final int buttonA = 1;
   public static final int buttonB = 2;
@@ -69,6 +71,12 @@ public class OI {
     bLeftBumper = new JoystickButton(controller , buttonLeftBumper);
     bRightBumper = new JoystickButton(controller , buttonRightBumper);
     leftPaddle = new JoystickButton(controller, buttonLeftPaddle);
+
+    //bX.whenPressed(new TreadIn());
+    //bY.whenPressed(new TreadOut());
+
+    bA.whenPressed(new ElevatorUp());
+    bB.whenPressed(new ElevatorDown());
   }
 
   public XboxController getController() {

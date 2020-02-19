@@ -79,6 +79,8 @@ public  final int buttonLeftPaddle = 9;
     bRightBumper = new JoystickButton(controller , buttonRightBumper);
     leftPaddle = new JoystickButton(controller, buttonLeftPaddle);
 
+    bB.whenPressed(new PidWithNoPID());
+    //bA.whenPressed(new Rotate90());
 
   }
 

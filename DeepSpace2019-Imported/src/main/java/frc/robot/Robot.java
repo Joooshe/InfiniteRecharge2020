@@ -16,12 +16,14 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.CargoShooter;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.DriveTrainPID;
 import frc.robot.subsystems.FlaccidWrist;
 import frc.robot.subsystems.HatchMechanism;
 import frc.robot.subsystems.LineSensors;
@@ -37,6 +39,7 @@ import frc.robot.subsystems.Wrist;
  */
 public class Robot extends TimedRobot {
   public static DriveTrain driveTrain;
+  public static DriveTrainPID driveTrainPID;
   public static OI m_oi;
   public static HatchMechanism hatchMechanism;
   public static CargoShooter cargoShooter;
@@ -59,6 +62,7 @@ public class Robot extends TimedRobot {
     isExtended = false;
 
     driveTrain = new DriveTrain();
+    driveTrainPID = new DriveTrainPID();
     hatchMechanism = new HatchMechanism();
     cargoShooter = new CargoShooter();
     wrist = new Wrist();
@@ -166,13 +170,21 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     lineSensors.display();
     Scheduler.getInstance().run();
-
+    Dashboard();
   }
-
   /**
    * This function is called periodically during test mode.
    */
   @Override
   public void testPeriodic() {
+  }
+
+  public void Dashboard() {
+    
+    SmartDashboard.putNumber("gyro", RobotMap.gyro.getAngle());
+    SmartDashboard.putNumber("X", m_oi.controller.getX(Hand.kLeft));
+    SmartDashboard.putNumber("Y", m_oi.controller.getY(Hand.kLeft));
+    SmartDashboard.putNumber("Z", m_oi.controller.getX(Hand.kRight));
+
   }
 }

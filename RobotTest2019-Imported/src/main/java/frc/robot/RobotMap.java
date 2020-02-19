@@ -11,6 +11,7 @@ This lets you keep track of the numbers easily by assigning them to names */
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SPI;
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -18,6 +19,7 @@ import edu.wpi.first.wpilibj.SPI;
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  */
+import edu.wpi.first.wpilibj.Spark;
 public class RobotMap {
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
@@ -30,18 +32,25 @@ public class RobotMap {
   // public static int rangefinderModule = 1;
 
 //drive train motor port values
-public static final int m_left = 0;
-public static final int m_right = 1;
+
+
+public static final int km_left = 0;
+public static final int km_right = 1;
+
+
+public static final Spark m_left = new Spark(km_left);
+public static final Spark m_right = new Spark(km_right);
 
 //ultra sonic sensor port values
-public static final int m_ultrasonic = 0;
-public static final int potent = 1;
-public static final int unknown = 3;
+//public static final int m_ultrasonic = 0;
+public static final int potent = 2;
+public static final int lightSensor = 3;
 
-public static final SPI.Port gyro = SPI.Port.kOnboardCS0;
+public static final SPI.Port kGyro = SPI.Port.kOnboardCS0;
+public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro(kGyro);
 
 //port values for wrist
-public static final int pot = 3; //analog
+public static final int pot = 0; //analog
 public static final int wristTalon = 2; //pwm
 
 

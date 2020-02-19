@@ -8,9 +8,6 @@
 package frc.robot.subsystems;
 
 import frc.robot.commands.*;
-import org.graalvm.compiler.lir.aarch64.AArch64Call.DirectFarForeignCallOp;
-import com.ctre.CANTalon;
-
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;

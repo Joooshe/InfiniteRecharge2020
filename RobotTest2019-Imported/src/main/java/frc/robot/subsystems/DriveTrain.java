@@ -33,8 +33,8 @@ public class DriveTrain extends Subsystem {
 
 
   public DriveTrain () {
-    m_left = new Spark(RobotMap.m_left);
-    m_right = new Spark(RobotMap.m_right);
+    m_left = (RobotMap.m_left);
+    m_right = (RobotMap.m_right);
 
     potent = new AnalogPotentiometer(RobotMap.pot, 250, 0);
     drive = new DifferentialDrive(m_left, m_right);
@@ -43,6 +43,10 @@ public class DriveTrain extends Subsystem {
 
   public void move(XboxController controller) {
     drive.arcadeDrive(controller.getY(Hand.kLeft), controller.getX(Hand.kRight));
+  }
+
+  public void arcadeDrive(double speed, double rotation) {
+    drive.arcadeDrive(speed, rotation);
   }
 
   public void drive (double speed, double rotation) {

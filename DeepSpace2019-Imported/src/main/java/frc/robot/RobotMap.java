@@ -7,6 +7,11 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -16,10 +21,20 @@ package frc.robot;
 public class RobotMap {
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
+
   public static final int backRightMotor = 0;
   public static final int frontLeftMotor =  3; 
   public static final int frontRightMotor = 1;
   public static final int backLeftMotor = 5;
+
+  public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+
+  public static final WPI_VictorSPX frontLeftVictor = new WPI_VictorSPX(frontLeftMotor);
+  public static final WPI_VictorSPX backLeftVictor = new WPI_VictorSPX(backLeftMotor);
+  public static final WPI_VictorSPX backRightVictor = new WPI_VictorSPX(backRightMotor);
+  public static final WPI_VictorSPX frontRightVictor = new WPI_VictorSPX(frontRightMotor);
+  
+  public static final MecanumDrive driveTrain = new MecanumDrive(frontLeftVictor, backLeftVictor, frontRightVictor, backRightVictor);
 
   public static final int solenoid1 = 0;
   public static final int solenoid2 = 1;

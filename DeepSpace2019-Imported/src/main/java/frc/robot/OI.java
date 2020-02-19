@@ -26,7 +26,7 @@ public class OI {
   // number it is.
   // Joystick stick = new Joystick(port);
   // Button button = new JoystickButton(stick, buttonNumber);
-  private XboxController controller;
+  public static  XboxController controller;
   private Button bA;
   private Button bB;
   private Button bX;
@@ -53,10 +53,14 @@ public class OI {
     bLeftBumper = new JoystickButton(controller , buttonLeftBumper);
     bRightBumper = new JoystickButton(controller , buttonRightBumper);
     leftPaddle = new JoystickButton(controller, buttonLeftPaddle);
-
+    /*
     bY.whenPressed(new HatchPickup());
     bX.whenPressed(new Align270());
     bB.whenPressed(new Align90());
+    */
+
+    bY.whenPressed(new TestRight());
+    bB.whenPressed(new RotateTwo90());
     bA.whenPressed(new SwitchDirection());
     
     bRightBumper.whenPressed(new CargoShoot());

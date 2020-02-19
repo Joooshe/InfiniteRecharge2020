@@ -42,12 +42,13 @@ public class DriveTrain extends Subsystem {
   private Potentiometer potent;
 
   public DriveTrain() {
-    frontLeftVictor = new WPI_VictorSPX(RobotMap.frontLeftMotor);
-    backLeftVictor = new WPI_VictorSPX(RobotMap.backLeftMotor);
-    backRightVictor = new WPI_VictorSPX(RobotMap.backRightMotor);
-    frontRightVictor = new WPI_VictorSPX(RobotMap.frontRightMotor);
+    frontLeftVictor = RobotMap.frontLeftVictor;
+    backLeftVictor = RobotMap.backLeftVictor;
+    backRightVictor = RobotMap.backRightVictor;
+    frontRightVictor = RobotMap.frontRightVictor;
+
     gyro = new AHRS(Port.kUSB);
-    drive = new MecanumDrive(frontLeftVictor, backLeftVictor, frontRightVictor, backRightVictor);
+    drive = RobotMap.driveTrain;//new MecanumDrive(frontLeftVictor, backLeftVictor, frontRightVictor, backRightVictor);
     drive.setDeadband(0.1);
 
     //TESTING
@@ -56,19 +57,16 @@ public class DriveTrain extends Subsystem {
   }
   
   public void move(XboxController controller) {
-    SmartDashboard.putNumber("gyro", gyro.getYaw());
-    SmartDashboard.putNumber("X", controller.getX(Hand.kLeft));
-    SmartDashboard.putNumber("Y", controller.getY(Hand.kLeft));
-    SmartDashboard.putNumber("Z", controller.getX(Hand.kRight));
 
     //TEST
-    SmartDashboard.putNumber("Potentiometer", potent.get());
+    //SmartDashboard.putNumber("Potentiometer", potent.get());
 
     if (controller.getAButton()) {
-      gyro.reset();
+      //gyro.reset();
+      //drive.driveCartesian(1, 0, 0);
     }
     if (controller.getBButton()) {
-      SmartDashboard.putString("lkhfalhflhkahjlasflhlhkaflhkaklaskjlfasklasfljk", "bjaskjasjhlasdlhjdsajhashjkhaksjuiqiuqkhebnbn");
+      //SmartDashboard.putString("lkhfalhflhkahjlasflhlhkaflhkaklaskjlfasklasfljk", "bjaskjasjhlasdlhjdsajhashjkhaksjuiqiuqkhebnbn");
     }
     if (Robot.isForward) {
       // first way we drove drive.driveCartesian(controller.getX(Hand.kLeft), -controller.getY(Hand.kLeft), controller.getX(Hand.kRight), gyro.getAngle());

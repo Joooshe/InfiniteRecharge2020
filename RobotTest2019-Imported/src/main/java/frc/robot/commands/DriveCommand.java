@@ -28,7 +28,6 @@ public class DriveCommand extends Command {
   @Override
   protected void execute() {
     Robot.driveTrain.move(Robot.m_oi.getController());
-    SmartDashboard.putNumber("Test", 123456789.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()

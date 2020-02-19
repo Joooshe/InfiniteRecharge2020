@@ -5,10 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import frc.robot.RobotMap;
@@ -16,28 +17,27 @@ import frc.robot.RobotMap;
 /**
  * Add your docs here.
  */
-public class PIDTest extends PIDSubsystem {
+public class Wrist extends PIDSubsystem {
   /**
    * Add your docs here.
    */
-  private Potentiometer pot;
-  private Talon wristTalon;
+  private  Potentiometer pot;
+  private  VictorSP victor;
   private static final double kP = 1.0;
   private static final double kI = 0.0;
   private static final double kD = 0.0;
   private static final double tolerance = 2.0;
 
-  public PIDTest() {
+  public Wrist() {
     // Intert a subsystem name and PID values here
-    super("PIDTest", kP, kI, kD);
+    super("Wrist", kP , kI, kD);
     // Use these to get going:
     // setSetpoint() - Sets where the PID controller should move the system
     // to
     // enable() - Enables the PID controller.
-    pot = new AnalogPotentiometer(RobotMap.pot, 250, 0);
-    wristTalon = new Talon(RobotMap.wristTalon);
+    pot = new AnalogPotentiometer(1, 250, 0);
+    victor = new VictorSP(RobotMap.wrist);
     setAbsoluteTolerance(tolerance);
-    setSetpoint(125);
   }
 
   @Override
@@ -58,7 +58,6 @@ public class PIDTest extends PIDSubsystem {
   protected void usePIDOutput(double output) {
     // Use output to drive your system, like a motor
     // e.g. yourMotor.set(output);
-    wristTalon.pidWrite(output);
-
+    victor.set(output);
   }
 }
