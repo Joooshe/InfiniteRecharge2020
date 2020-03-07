@@ -11,6 +11,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
@@ -24,19 +26,21 @@ public class RobotMap {
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
 
-  public static final int backRightMotor = 0;
+  public static final int backRightMotor = 1;
   public static final int frontLeftMotor =  3; 
   public static final int frontRightMotor = 1;
-  public static final int backLeftMotor = 1;
+  public static final int backLeftMotor = 2;
 
   public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
   public static final WPI_VictorSPX frontLeftVictor = new WPI_VictorSPX(frontLeftMotor);
-  public static final WPI_TalonSRX backLeftVictor = new WPI_TalonSRX(backLeftMotor);
-  public static final WPI_VictorSPX backRightVictor = new WPI_VictorSPX(backRightMotor);
+  public static final WPI_TalonSRX backLeftTalon = new WPI_TalonSRX(backLeftMotor);
+  public static final WPI_TalonSRX backRightTalon = new WPI_TalonSRX(backRightMotor);
   public static final WPI_VictorSPX frontRightVictor = new WPI_VictorSPX(frontRightMotor);
   
-  public static final MecanumDrive driveTrain = new MecanumDrive(frontLeftVictor, backLeftVictor, frontRightVictor, backRightVictor);
+  public static final MecanumDrive driveTrain = new MecanumDrive(frontLeftVictor, backLeftTalon, frontRightVictor, backRightTalon);
+  
+  public static NetworkTable limeLightTable = NetworkTableInstance.getDefault().getTable("limelight");
 
   public static final int solenoid1 = 0;
   public static final int solenoid2 = 1;

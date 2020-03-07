@@ -7,33 +7,46 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Spark;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.commands.CargoOff;
 
 /**
  * Add your docs here.
  */
-public class CargoShooter extends Subsystem {
+public class Intake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private Spark cargoMotor;
+  public WPI_VictorSPX m_intake;
 
-  public CargoShooter() {
-    cargoMotor = new Spark(RobotMap.cargoMotor);
+  public DoubleSolenoid s_intake;
+
+  public Intake() {
+    m_intake = RobotMap.m_intake;
+
+    s_intake = RobotMap.s_intake;
   }
 
-  public void shoot() {
-    cargoMotor.setSpeed(RobotMap.cargoMotorSpeed);
+  public void intake(double speed) {
+    m_intake.set(speed);
   }
 
-  public void takeIn() {
-    cargoMotor.setSpeed(-RobotMap.cargoMotorSpeed);    
+  public void release(double speed) {
+    m_intake.set(-speed);
+  }
+
+  public void extend() {
+    s_intake.set(DoubleSolenoid.Value.kForward);
+  }
+
+  public void retract() {
+    s_intake.set(DoubleSolenoid.Value.kReverse);
   }
 
   public void stop() {
-    cargoMotor.setSpeed(RobotMap.cargoMotorOff);
+    m_intake.set(0);
   }
 
   @Override

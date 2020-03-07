@@ -75,8 +75,18 @@ public class OI {
     //bX.whenPressed(new TreadIn());
     //bY.whenPressed(new TreadOut());
 
+    bX.whenPressed(new IntakeIn());
     bA.whenPressed(new ElevatorUp());
     bB.whenPressed(new ElevatorDown());
+
+    //B - elevator down to set position
+    //A - limeLight aim (if possible range)
+    //Y - elevator up to set position
+    //X - limeLight range range
+    //Right Bumper - intake (not holding down): turn off same button
+    //Right Trigger - shoot solenoid and motor (not holding down): turn off same button
+    //Left Bumper - conveyor (tap)
+    //Left Trigger - door
   }
 
   public XboxController getController() {

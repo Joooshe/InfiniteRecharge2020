@@ -7,15 +7,17 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 
-public class TestRight extends Command {
-  public TestRight() {
+public class MaintainEncoderSpeed extends Command {
+  private int speed;
+
+  public MaintainEncoderSpeed(int speed) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    this.speed = speed;
+
     requires(Robot.driveTrain);
   }
 
@@ -27,9 +29,7 @@ public class TestRight extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    RobotMap.frontLeftVictor.set(0.3);
-    RobotMap.backLeftVictor.set(0.3);
-
+    Robot.driveTrain.setEncoderSpeed(speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()

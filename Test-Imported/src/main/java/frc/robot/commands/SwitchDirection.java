@@ -21,9 +21,11 @@ public class SwitchDirection extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    /*
     Robot.isForward = !Robot.isForward;
     SmartDashboard.putString("Direction", Robot.isForward ? "Facing Hatch" : "Facing Cargo");
     Robot.driveTrain.reset();
+    */
   }
 
   // Called repeatedly when this Command is scheduled to run

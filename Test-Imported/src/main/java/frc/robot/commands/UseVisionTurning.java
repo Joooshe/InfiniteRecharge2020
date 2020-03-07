@@ -10,41 +10,44 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class WristDown extends Command {
-  private static final double down = 0;
+public class UseVisionTurning extends Command {
+  private static double value;
 
-  public WristDown() {
+  public UseVisionTurning(double value) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.wrist);
+    this.value = value;
+    requires(Robot.driveTrain);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.wrist.enable();
-    Robot.wrist.setSetpoint(down);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.driveTrain.visionTurning(value);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.wrist.onTarget();
+   return Math.abs(Robot.driveTrain.visionTurning(value)) < 5;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.driveTrain.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+
+    end();
   }
 }

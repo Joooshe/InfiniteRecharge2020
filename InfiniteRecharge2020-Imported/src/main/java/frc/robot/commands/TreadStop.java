@@ -10,8 +10,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class TreadIn extends Command {
-  public TreadIn() {
+public class TreadStop extends Command {
+  public TreadStop() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.tread);
@@ -25,7 +25,7 @@ public class TreadIn extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.tread.slowIntake();
+    Robot.tread.stop();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -37,7 +37,6 @@ public class TreadIn extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.tread.stop();
   }
 
   // Called when another command which requires one or more of the same

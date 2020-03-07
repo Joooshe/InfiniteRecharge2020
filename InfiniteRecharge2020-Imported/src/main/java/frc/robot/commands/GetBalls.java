@@ -9,18 +9,20 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ScoreCargo extends CommandGroup {
+public class GetBalls extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public ScoreCargo() {
+  public GetBalls() {
+    addParallel(new TreadIn());
+    addParallel(new ExtendIntake());
+    addSequential(new IntakeIn());
+
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-    addParallel(new DriveToDistance());
-    addParallel(new WristUp());
-    addSequential(new CargoShoot());
+
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());

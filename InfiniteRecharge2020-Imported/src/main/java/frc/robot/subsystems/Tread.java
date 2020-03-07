@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -15,34 +16,37 @@ import frc.robot.RobotMap;
 /**
  * Add your docs here.
  */
-public class SecondTread extends Subsystem {
+public class Tread extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
   public static final double kSlowIntakeSpeed = 0.3;
   public static final double kFastIntakeSpeed = 0.6;
 
-  public static WPI_TalonSRX m1;
-  public static WPI_TalonSRX m2;
+  public static WPI_VictorSPX m_Tread;
 
-  public SecondTread() {
-    m1 = RobotMap.m1SecondTread;
-    m2 = RobotMap.m2SecondTread;
+  public Tread() {
+    m_Tread = RobotMap.m_Tread;
   }
 
   public void slowIntake() {
-    m1.set(kSlowIntakeSpeed);
-    m2.set(kSlowIntakeSpeed);
+    m_Tread.set(kSlowIntakeSpeed);
   }
 
   public void fastIntake() {
-    m1.set(kFastIntakeSpeed);
-    m2.set(kFastIntakeSpeed);
+    m_Tread.set(kFastIntakeSpeed);
   }
 
   public void reverseIntake() {
-    m1.set(-kSlowIntakeSpeed);
-    m2.set(-kSlowIntakeSpeed);
+    m_Tread.set(-kSlowIntakeSpeed);
+  }
+
+  public void setSpeed(double speed) {
+    m_Tread.set(speed);
+  }
+
+  public void stop() {
+    m_Tread.set(0);
   }
 
   @Override

@@ -46,6 +46,7 @@ public class ShootBall extends Command {
   protected void end() {
     timer.reset();
     timer.stop();
+    Robot.shooter.stop();
   }
 
   // Called when another command which requires one or more of the same

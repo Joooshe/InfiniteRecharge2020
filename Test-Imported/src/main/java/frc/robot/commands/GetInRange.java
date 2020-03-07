@@ -8,43 +8,62 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
-public class WristUp extends Command {
-private static final double up = 0;
+public class GetInRange extends Command {
+  private double distanceError;
+  private int count;
 
-  public WristUp() {
+  public GetInRange() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.wrist);
+    requires(Robot.driveTrain);
+
+    //distanceError = RobotMap.limeLightTable.getEntry("ty").getDouble(0.0);
+
+    count = 0;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.wrist.enable();
-    Robot.wrist.setSetpoint(up);
+    Robot.driveTrain.configPIDLimeLight_TY();
+    Robot.driveTrain.enable();
   }
+  
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    System.out.println(Robot.driveTrain.limeLight.getTY());
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.wrist.onTarget();
+    if (Robot.driveTrain.onTarget()) {
+      count++;
+    } else {
+      count = 0;
+    }
+
+    SmartDashboard.putNumber("Count", count);
+
+    return count >= 6 && Robot.driveTrain.onTarget() && Robot.driveTrain.limeLight.getTV() == 1;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.driveTrain.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

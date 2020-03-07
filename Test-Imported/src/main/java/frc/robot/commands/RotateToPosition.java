@@ -10,11 +10,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class CargoShoot extends Command {
-  public CargoShoot() {
+public class RotateToPosition extends Command {
+  private int rotations;
+  private static final int kEncoderConstant = 4096;
+
+  public RotateToPosition(int rotations) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.cargoShooter);
+    this.rotations = rotations * kEncoderConstant;
+    
+    requires(Robot.driveTrain);
   }
 
   // Called just before this Command runs the first time
@@ -25,25 +30,26 @@ public class CargoShoot extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.cargoShooter.shoot();
+    //Robot.driveTrain.backLeftTalon.set(.3);
+   Robot.driveTrain.setPositionRotation(rotations);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return false;// Robot.driveTrain.backLeftTalon.getClosedLoopError() < 100;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.cargoShooter.stop();
+    Robot.driveTrain.backLeftMaster.set(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.cargoShooter.stop();
+    end();
   }
 }

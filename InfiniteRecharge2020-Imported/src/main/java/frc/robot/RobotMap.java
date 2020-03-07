@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -38,14 +39,20 @@ public class RobotMap {
   public static final int backLeftDrive = 2;
   public static final int backRightDrive = 4;
 
-  public static final int kShooter = 5;
+  public static final int klShooterMotor = 5;
+  public static final int krShooterMotor = 6;
+  public static final int klShooterSolenoid_f = 10;
+  public static final int klShooterSolenoid_r = 11;
+  public static final int krShooterSolenoid_f = 12;
+  public static final int krShooterSolenoid_r = 13;
 
-  public static final int km1SecondTread = 6;
-  public static final int km2SecondTread = 7;
+  public static final int kTread = 7;
 
   public static final int km_Elevator = 8;
-  public static final int km_ElevatorVictor = 1;
 
+  public static final int kIntakeMotor = 9;
+  public static final int kIntakeSolenoid_f = 0;
+  public static final int kIntakeSolenoid_r = 1;
 
   //MOTOR CONSTANTS
   public static final WPI_TalonSRX kfrontLeft = new WPI_TalonSRX(RobotMap.frontLeftDrive);
@@ -53,13 +60,18 @@ public class RobotMap {
   public static final WPI_TalonSRX kbackLeft = new WPI_TalonSRX(RobotMap.backLeftDrive);
   public static final WPI_TalonSRX kbackRight = new WPI_TalonSRX(RobotMap.backRightDrive);
 
-  public static final WPI_TalonSRX m_Shooter = new WPI_TalonSRX(kShooter);
+  public static final WPI_VictorSPX ml_Shooter = new WPI_VictorSPX(klShooterMotor);
+  public static final WPI_VictorSPX mr_Shooter = new WPI_VictorSPX(krShooterMotor);
+  public static final DoubleSolenoid sl_Shooter = new DoubleSolenoid(klShooterSolenoid_f, klShooterSolenoid_r);
+  public static final DoubleSolenoid sr_Shooter = new DoubleSolenoid(krShooterSolenoid_f, krShooterSolenoid_r);
 
-  public static final WPI_TalonSRX m1SecondTread = new WPI_TalonSRX(km1SecondTread);
-  public static final WPI_TalonSRX m2SecondTread = new WPI_TalonSRX(km2SecondTread);
+
+  public static final WPI_VictorSPX m_Tread = new WPI_VictorSPX(kTread);
 
   public static final WPI_TalonSRX m_Elevator = new WPI_TalonSRX(km_Elevator);
-  public static final WPI_VictorSPX m_ElevatorVictor = new WPI_VictorSPX(km_ElevatorVictor);
+
+  public static final WPI_VictorSPX m_intake = new WPI_VictorSPX(kIntakeMotor);
+  public static final DoubleSolenoid s_intake = new DoubleSolenoid(kIntakeSolenoid_f, kIntakeSolenoid_r);
 
   public static final SpeedControllerGroup kLeftMotorGroup = new SpeedControllerGroup(kfrontLeft, kbackLeft);
   public static final SpeedControllerGroup kRightMotorGroup = new SpeedControllerGroup(kfrontRight, kbackRight);

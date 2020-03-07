@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -18,7 +19,8 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.SecondTread;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Tread;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.cameraserver.CameraServer;
 
@@ -49,8 +51,10 @@ public class Robot extends TimedRobot {
 
   public static DriveTrain driveTrain;
   public static Shooter shooter;
-  public static SecondTread secondTread;
+  public static Tread tread;
   public static Elevator elevator;
+  public static Compressor compressor;
+  public static Intake intake;
 
   public static Timer timer;
 
@@ -82,8 +86,11 @@ public class Robot extends TimedRobot {
     //m_oi = new OI();
     driveTrain = new DriveTrain();
     shooter = new Shooter();
-    secondTread = new SecondTread();
+    tread = new Tread();
     elevator = new Elevator();
+    intake = new Intake();
+
+    compressor = new Compressor(0);
 
     timer = new Timer();
 
@@ -180,6 +187,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    compressor.setClosedLoopControl(true);
     Dashboard();
   }
 

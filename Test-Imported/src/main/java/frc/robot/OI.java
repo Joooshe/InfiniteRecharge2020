@@ -54,9 +54,11 @@ public class OI {
     bRightBumper = new JoystickButton(controller , buttonRightBumper);
     leftPaddle = new JoystickButton(controller, buttonLeftPaddle);
 
-    bY.whenPressed(new StopDriveTrain());
-    bB.whenPressed(new RotateTwo90());
+    bY.whenPressed(new AimingAndRange());
+    //bB.whenPressed(new RotateTwo90());
+    bB.whenPressed(new AimWithLimeLight());
     bA.whenPressed(new SwitchDirection());
+    bX.whenPressed(new TestCustomPIDRange());
     //bX.whenPressed(new CalibrateGyro());
     
     /*

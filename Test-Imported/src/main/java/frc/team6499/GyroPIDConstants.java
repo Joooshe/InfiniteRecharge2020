@@ -7,29 +7,12 @@
 
 package frc.team6499;
 
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
-import frc.robot.Robot;
-import frc.robot.subsystems.DriveTrain;
-
 /**
  * Add your docs here.
  */
-public class TalonEncoder implements PIDSource {
-
-    public TalonEncoder() {
-
-    }
-
-    public PIDSourceType getPIDSourceType() {
-        return new PIDSourceType();
-    }
-
-    public double pidGet() {
-        return Robot.driveTrain.backLeftTalon.getSelectedSensorPosition();
-    }
-
-    public void setPIDSourceType() {
-
-    }
+public class GyroPIDConstants {
+    public static final double kP = 0.0;
+    public static final double kI = 0.0;
+    public static final double kD = 0.0;
+    public static final double kF = 0.0;
 }

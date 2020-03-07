@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
@@ -25,13 +27,15 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.CargoShooter;
-import frc.robot.subsystems.FlaccidWrist;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.HatchMechanism;
 import frc.robot.subsystems.LineSensors;
 import frc.robot.subsystems.Wrist;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+
+import frc.robot.RobotMap;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -44,12 +48,12 @@ public class Robot extends TimedRobot {
   public static DriveTrain driveTrain;
   public static OI m_oi;
   public static HatchMechanism hatchMechanism;
-  public static CargoShooter cargoShooter;
   public static Wrist wrist;
   public static LineSensors lineSensors;
-  public static FlaccidWrist flaccidWrist;
   public static Compressor compressor;
   public static boolean isExtended;
+
+  public static NetworkTable table;
 
   public static boolean isForward; //true is facing cargo
 
@@ -60,25 +64,26 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     RobotMap.gyro.calibrate();
-    isForward = true;
+    isForward = false;
     isExtended = false;
 
     driveTrain = new DriveTrain();
 
     hatchMechanism = new HatchMechanism();
-    cargoShooter = new CargoShooter();
     wrist = new Wrist();
     lineSensors = new LineSensors();
-    flaccidWrist = new FlaccidWrist();
     compressor = new Compressor(0);
-    
 
     m_oi = new OI();
+    
 
+    driveTrain.backLeftMaster.set(ControlMode.Position, 10*4096 );
     SmartDashboard.putString("Direction", Robot.isForward ? "Facing Cargo" : "Facing Hatch");
     
+    //driveTrain.limeLight.turnOnLight();
+    
     //CameraServer.getInstance().startAutomaticCapture(0);
-
+    /*
     new Thread(() -> {
       UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
       camera.setResolution(640, 480);
@@ -95,6 +100,9 @@ public class Robot extends TimedRobot {
         outputStream.putFrame(output);
       }
     }).start();
+    */
+
+    table = NetworkTableInstance.getDefault().getTable("limelight");
   }
 
   /**
@@ -118,6 +126,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    //driveTrain.limeLight.turnOffLight();
   }
 
   @Override
@@ -164,6 +173,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    driveTrain.backLeftMaster.set(ControlMode.Position, 10*4096 );
   }
 
   /**
@@ -189,7 +199,30 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Y", m_oi.controller.getY(Hand.kLeft));
     SmartDashboard.putNumber("Z", m_oi.controller.getX(Hand.kRight));
     
-    SmartDashboard.putNumber("Encoder", driveTrain.backLeftTalon.getSelectedSensorPosition()/4096);
+    SmartDashboard.putNumber("Encoder Position In Rotations", driveTrain.backLeftMaster.getSelectedSensorPosition()/4096);
+    SmartDashboard.putNumber("Encoder Position Raw Units", driveTrain.backLeftMaster.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Encoder Velocity", driveTrain.backLeftMaster.getSelectedSensorVelocity());
+    //2121
+    driveTrain.displayMotorOutput();
+
+    NetworkTableEntry tx = table.getEntry("tx");
+    NetworkTableEntry ty = table.getEntry("ty");
+    NetworkTableEntry ta = table.getEntry("ta");
+    
+    //read values periodically
+    double x = tx.getDouble(0.0);
+    double y = ty.getDouble(0.0);
+    double area = ta.getDouble(0.0);
+    
+    //post to smart dashboard periodically
+    SmartDashboard.putNumber("LimelightX", x);
+    SmartDashboard.putNumber("LimelightY", y);
+    SmartDashboard.putNumber("LimelightArea", area);
+    SmartDashboard.putNumber("PID TX", Robot.driveTrain.limeLight.getTX());
+
+    SmartDashboard.putNumber("Controller Left Y", m_oi.getController().getY(Hand.kLeft));
+    SmartDashboard.putNumber("Controller Left X", m_oi.getController().getX(Hand.kLeft));
+
     LiveWindow.updateValues();
   }
 }

@@ -14,7 +14,7 @@ public class TreadOut extends Command {
   public TreadOut() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.secondTread);
+    requires(Robot.tread);
   }
 
   // Called just before this Command runs the first time
@@ -25,7 +25,7 @@ public class TreadOut extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.secondTread.reverseIntake();
+    Robot.tread.reverseIntake();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -37,6 +37,7 @@ public class TreadOut extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.tread.stop();
   }
 
   // Called when another command which requires one or more of the same

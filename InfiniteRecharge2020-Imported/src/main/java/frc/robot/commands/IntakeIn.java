@@ -10,11 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class FlaccidWristMove extends Command {
-  public FlaccidWristMove() {
+public class IntakeIn extends Command {
+  public static final double kIntakeSpeed = 0.6;
+
+  public IntakeIn() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.flaccidWrist);
+    requires(Robot.intake);
   }
 
   // Called just before this Command runs the first time
@@ -25,7 +27,7 @@ public class FlaccidWristMove extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.flaccidWrist.move(Robot.m_oi.getController());
+    Robot.intake.intake(kIntakeSpeed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -37,11 +39,13 @@ public class FlaccidWristMove extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.intake.intake(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

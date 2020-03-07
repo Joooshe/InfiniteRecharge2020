@@ -10,5 +10,17 @@ package frc.team6499;
 /**
  * Add your docs here.
  */
-public class TalonEncPIDSourceClass {
+public class LimeLightPIDConstants {
+    public static final double kP_TX = 0.040;    //0.040;
+    public static final double kI_TX = 0.005;    //0.005;
+    public static final double kD_TX = 0.100;    //0.100;
+    public static final double kF_TX = 0.0;
+    //Ku = 4.0
+    //Tu = 0.85
+    //
+
+    public static final double kP_TY = 1.0; //1.0
+    public static final double kI_TY = 0.0; //0.0
+    public static final double kD_TY = 0.0;
+    public static final double kF_TY = 0.0;
 }

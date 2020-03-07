@@ -9,19 +9,19 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ScoreHatch extends CommandGroup {
+public class FoldUpBallGetter extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public ScoreHatch() {
+  public FoldUpBallGetter() {
+    addParallel(new TreadStop());
+    addParallel(new RetractIntake());
+    addSequential(new IntakeStop());
+
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-
-    addParallel(new DriveToDistance());
-    addSequential(new SolenoidExtend());
-    addSequential(new SolenoidRetract());
 
     // To run multiple commands at the same time,
     // use addParallel()

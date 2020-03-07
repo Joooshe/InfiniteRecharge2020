@@ -8,44 +8,63 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
-public class SetAngle extends Command {
-  private double setpoint;
-
-  public SetAngle(double setpoint) {
+public class AimingAndRange extends Command {
+  private int count;
+  
+  public AimingAndRange() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    this.setpoint = setpoint;
-    requires(Robot.wrist);
+    requires(Robot.driveTrain);
+    count = 0;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.wrist.enable();
-    Robot.wrist.setSetpoint(setpoint);
+    Robot.driveTrain.configCustomPID_TY();
+    Robot.driveTrain.configPIDLimeLight_TX();
+    Robot.driveTrain.enable();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.driveTrain.configCustomPID_TY();
+    Robot.driveTrain.useCustomPID_TY();
+    System.out.println(Robot.driveTrain.customPID_TY.getOutput());
+    System.out.println(Robot.driveTrain.customPID_TY.onTarget());
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.wrist.onTarget();
+    if (Robot.driveTrain.onTarget() && Robot.driveTrain.customPID_TY.onTarget()) {
+      count++;
+    } else {
+      count = 0;
+    }
+
+    SmartDashboard.putNumber("Count", count);
+
+    boolean isFinished = count >= 7 && Robot.driveTrain.limeLight.getTV() == 1 && Robot.driveTrain.customPID_TY.onTarget() && Robot.driveTrain.onTarget();
+    System.out.println("Is finished: " + isFinished);
+    
+    return isFinished; //count >= 7 && Robot.driveTrain.onTarget() && Robot.driveTrain.limeLight.getTV() == 1 && Robot.driveTrain.customPID_TY.onTarget();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.driveTrain.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }
